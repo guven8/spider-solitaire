@@ -1,0 +1,107 @@
+.board {
+  min-height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.board .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 100px;
+}
+
+.board .closet {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-column-gap: 1em;
+}
+
+.board .stacks {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-column-gap: 1em;
+}
+
+.board .stacks .stack {
+  position: relative;
+}
+
+.board .stacks .stack .card {
+  position: absolute;
+}
+
+.board .stacks .stack .card:nth-child(1) { top: 0px; }
+.board .stacks .stack .card:nth-child(2) { top: 10px; }
+.board .stacks .stack .card:nth-child(3) { top: 20px; }
+.board .stacks .stack .card:nth-child(4) { top: 30px; }
+.board .stacks .stack .card:nth-child(5) { top: 40px; }
+.board .stacks .stack .card:nth-child(6) { top: 50px; }
+.board .stacks .stack .card:nth-child(7) { top: 60px; }
+.board .stacks .stack .card:nth-child(8) { top: 70px; }
+.board .stacks .stack .card:nth-child(9) { top: 80px; }
+.board .stacks .stack .card:nth-child(10) { top: 90px; }
+.board .stacks .stack .card:nth-child(11) { top: 100px; }
+.board .stacks .stack .card:nth-child(12) { top: 110px; }
+.board .stacks .stack .card:nth-child(13) { top: 120px; }
+.board .stacks .stack .card:nth-child(14) { top: 130px; }
+.board .stacks .stack .card:nth-child(15) { top: 140px; }
+
+.card {
+  width: 80px;
+  height: 130px;
+  background-color: whitesmoke;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 1px black;
+  position: relative;
+}
+
+.card.flipped {
+  background-color: teal;
+}
+
+.card.flipped::before
+.card.flipped::after {
+  display: none;
+}
+
+.card::before {
+  position: absolute;
+  font-size: 4em;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card.clubs::before {
+  content: "♣";
+}
+
+.card.diamonds::before {
+  content: "♦";
+  color: red;
+}
+
+.card::after {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.card.n1::after { content: "A" }
+.card.n2::after { content: "2" }
+.card.n3::after { content: "3" }
+.card.n4::after { content: "4" }
+.card.n5::after { content: "5" }
+.card.n6::after { content: "6" }
+.card.n7::after { content: "7" }
+.card.n8::after { content: "8" }
+.card.n9::after { content: "9" }
+.card.n10::after { content: "10" }
+.card.n11::after { content: "Jack" }
+.card.n12::after { content: "Queen" }
+.card.n13::after { content: "King" }
