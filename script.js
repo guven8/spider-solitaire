@@ -1,4 +1,3 @@
-// Game variables
 let deck = [];
 const piles = [];
 const numPiles = 10;
@@ -20,9 +19,8 @@ const ranks = [
   "Q",
   "K",
 ];
-let suits = [...allSuits]; // Default to all suits (hard difficulty)
+let suits = [...allSuits];
 
-// Initialize deck based on selected difficulty
 function initializeDeck() {
   deck = [];
   const deckCount = Math.ceil(
@@ -38,7 +36,6 @@ function initializeDeck() {
   shuffle(deck);
 }
 
-// Shuffle deck
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -46,14 +43,12 @@ function shuffle(array) {
   }
 }
 
-// Initialize piles
 function initializePiles() {
   for (let i = 0; i < numPiles; i++) {
     piles[i] = [];
   }
 }
 
-// Deal cards to piles
 function deal() {
   if (deck.length < numPiles * 5 + 4) {
     console.error("Not enough cards in the deck to deal.");
@@ -98,10 +93,9 @@ function deal() {
   addDragAndDropListeners();
 }
 
-// Add cards from top deck to piles
 function dealToPiles() {
   if (deck.length < numPiles) {
-    console.error("No more cards left in the deck.");
+    console.error("Not enough cards left in the deck.");
     alert("No more cards left to deal.");
     return;
   }
@@ -114,9 +108,12 @@ function dealToPiles() {
 
   updatePiles();
   updateTopDeck();
+
+  if (isGameOver()) {
+    alert("No more moves possible. Game over.");
+  }
 }
 
-// Update the top deck display
 function updateTopDeck() {
   const topDeck = document.getElementById("top-deck");
   topDeck.innerHTML = "";
@@ -131,12 +128,10 @@ function updateTopDeck() {
   }
 }
 
-// Add event listener to top deck
 function addTopDeckListener() {
   document.getElementById("top-deck").addEventListener("click", dealToPiles);
 }
 
-// Add event listeners for drag-and-drop functionality
 function addDragAndDropListeners() {
   const cards = document.querySelectorAll(".card");
 
@@ -205,7 +200,6 @@ function addDragAndDropListeners() {
   });
 }
 
-// Check if a move is valid
 function isValidMove(movingCards, targetPile) {
   if (targetPile.length === 0) return true;
 
@@ -221,7 +215,6 @@ function isValidMove(movingCards, targetPile) {
   return topRankIndex === movingRankIndex + 1;
 }
 
-// Check for single-suit sequence
 function isSingleSuitSequence(pileIndex, cardIndex) {
   const sequence = piles[pileIndex].slice(cardIndex);
   const suit = sequence[0].suit;
@@ -229,11 +222,9 @@ function isSingleSuitSequence(pileIndex, cardIndex) {
   return sequence.every((card) => card.suit === suit);
 }
 
-// Check for a complete sequence
 function checkForCompleteSequence(pileIndex) {
   const pile = piles[pileIndex];
 
-  // Filter only visible cards for sequence validation
   const visiblePile = pile.filter((card) => card.visible);
 
   if (visiblePile.length < 13) return;
@@ -252,7 +243,6 @@ function checkForCompleteSequence(pileIndex) {
     }
   }
 
-  // Move complete sequence to completed sequences
   completedSequences.push(pile.splice(pile.length - 13, 13));
   updateCompletedSequences();
 
@@ -261,10 +251,37 @@ function checkForCompleteSequence(pileIndex) {
   }
 
   updatePiles();
-  console.log("Complete sequence removed!");
+
+  if (completedSequences.length === 8) {
+    alert("Congratulations! You have won the game!");
+  } else if (isGameOver()) {
+    alert("No more moves possible. Game over.");
+  }
 }
 
-// Update completed sequences display
+function isGameOver() {
+  if (deck.length > 0) return false;
+
+  for (const pile of piles) {
+    const visiblePile = pile.filter((card) => card.visible);
+    if (visiblePile.length >= 2) {
+      for (let i = 0; i < visiblePile.length - 1; i++) {
+        const currentCard = visiblePile[i];
+        const nextCard = visiblePile[i + 1];
+
+        if (
+          ranks.indexOf(currentCard.rank) ===
+          ranks.indexOf(nextCard.rank) + 1
+        ) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
+
 function updateCompletedSequences() {
   const container = document.getElementById("completed-sequences");
   container.innerHTML = "";
@@ -280,7 +297,6 @@ function updateCompletedSequences() {
   });
 }
 
-// Update piles after moving cards
 function updatePiles() {
   const container = document.getElementById("deck");
   container.innerHTML = "";
@@ -313,7 +329,6 @@ function updatePiles() {
   addDragAndDropListeners();
 }
 
-// Add event listener to New Game button
 document.getElementById("deal").addEventListener("click", () => {
   startNewGame();
 });
@@ -343,7 +358,6 @@ function startNewGame() {
   deal();
 }
 
-// Initialize and deal on first load
 initializeDeck();
 initializePiles();
 deal();
