@@ -8,20 +8,20 @@
   </head>
   <body>
     <div id="control-panel">
-      <button id="deal">Deal</button>
-      <label for="difficulty">Difficulty:</label>
-      <select id="difficulty">
-        <option value="easy">Easy (1 suit)</option>
-        <option value="medium">Medium (2 suits)</option>
-        <option value="hard">Hard (4 suits)</option>
-      </select>
+      <div class="container">
+        <button id="deal">Deal</button>
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+          <option value="easy">Easy (1 suit)</option>
+          <option value="medium">Medium (2 suits)</option>
+          <option value="hard">Hard (4 suits)</option>
+        </select>
+      </div>
     </div>
     <div id="game-container">
       <div class="top">
         <div id="top-deck"></div>
-        <div id="completed-sequences">
-          <div class="completed-sequence">A ♣</div>
-        </div>
+        <div id="completed-sequences"></div>
       </div>
       <div id="deck" class="deck"></div>
     </div>
